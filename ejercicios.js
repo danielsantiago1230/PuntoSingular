@@ -120,12 +120,17 @@ const handleChange3=(event)=>{
     const [...contraseña]=event.target.value
     on3=contraseña;
 }
+
 const handleSubmit3=(event)=>{
     const contraseña=on3;
     let mayusContraseña=[];
-    let cont3=0;
+    let simbolos=["*","_","-", "¿", "¡", "?", "#", "$"];
+    const esNumero=(a)=>{
+        return !isNaN(a)
+    }
     console.log(contraseña);
     if(7<contraseña.length && contraseña.length<16){
+        
         for (let j = 0; j < contraseña.length; j++) {
             if(contraseña[j]===" "){
                 console.log("Error la contraseña no puede tener espacios en blanco");
@@ -134,13 +139,116 @@ const handleSubmit3=(event)=>{
             mayusContraseña.push(contraseña[j].toUpperCase());
         }
         
-       
+        let cont3=0;
+       for (let i = 0; i < contraseña.length; i++) {
+            if(contraseña[i]===mayusContraseña[i]){
+                cont3++;
+            }   
+        }
+        
         if(cont3<2){
-            console.log("Error la contraseña debe tener 2 Mayusculas");
+            console.log("Error la contraseña debe tener 2 Mayusculas");  
+        }
+
+        let contadorSimbolos=0;
+        for (let z = 0; z < contraseña.length; z++) {
+            for (let x = 0; x < contraseña.length; x++) {
+                if(contraseña[z]===simbolos[x]){
+                    contadorSimbolos++;
+                }
+            }             
+        }
+        if(contadorSimbolos<1){
+            console.log("Debe contener al menos 1 carácter de esta lista (* _ - ¿ ¡ ? # $)");
+        }
+
+        let repNum=0,num=0;
+        for (let x = 0; x < contraseña.length; x++) {
+            if(esNumero(contraseña[x])){
+                if(contraseña[x]===contraseña[x+1]){
+                    repNum++;
+                }
+                num++;
+            }
+            
+        }
+        if(num!=0){
+            if(repNum!=0){
+                console.log("Error la contraseña no debe tener números repetidos");
+                if(num<3){
+                    console.log("Error la contraseña debe terner almenos 3 numeros");
+                }
+            }
+            else if(num<3){
+                console.log("Error la contraseña debe terner almenos 3 numeros");
+            }
+        }
+        else if(num<3){
+            console.log("Error la contraseña debe terner almenos 3 numeros");
         }
     }
     else{
+        
+        for (let j = 0; j < contraseña.length; j++) {
+            if(contraseña[j]===" "){
+                console.log("Error la contraseña no puede tener espacios en blanco");
+                break;
+            }
+            mayusContraseña.push(contraseña[j].toUpperCase());
+            
+        }
+        
+        let cont3=0;
+        for (let i = 0; i < contraseña.length; i++) {
+            if(contraseña[i]===mayusContraseña[i]){
+                cont3++;
+            }   
+        }
+        if(cont3<2){
+            console.log("Error la contraseña debe tener 2 Mayusculas");
+            
+        }
+    
+        let contadorSimbolos=0;
+        for (let z = 0; z < contraseña.length; z++) {
+            for (let x = 0; x < contraseña.length; x++) {
+                if(contraseña[z]===simbolos[x]){
+                    contadorSimbolos++;
+                }
+            }             
+        }
+
+        if(contadorSimbolos<1){
+            console.log("Debe contener al menos 1 carácter de esta lista (* _ - ¿ ¡ ? # $)");
+        }
+
+        let repNum=0,num=0;
+        for (let x = 0; x < contraseña.length; x++) {
+            if(esNumero(contraseña[x])){
+                if(contraseña[x]===contraseña[x+1]){
+                    repNum++;
+                }
+                num++;
+            }
+            
+        }
+        if(num!=0){
+            if(repNum!=0){
+                console.log("Error la contraseña no debe tener números repetidos");
+                if(num<3){
+                    console.log("Error la contraseña debe terner almenos 3 numeros");
+                }
+            }
+            else if(num<3){
+                console.log("Error la contraseña debe terner almenos 3 numeros");
+            }
+        }
+        else if(num<3){
+            console.log("Error la contraseña debe terner almenos 3 numeros");
+        }
         console.log("Error la contraseña debe tener entre 8 y 15 caracteres");
+
+        
     }
 
     event.preventDefault();
