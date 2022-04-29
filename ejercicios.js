@@ -292,25 +292,22 @@ const handleSubmit3=(event)=>{
         
         for (let k = 0; k < validez.length; k++) {
             if(validez[k]==1){
+               
                 point2[k].style.color="red";
             }
             
         }
+        const point3=document.querySelector("#contraseñaValida");
+        point3.style.display="none";
     }
 
     else if(validez[0]==0 || validez[1]==0 || validez[2]==0 || validez[3]==0 || validez[4]==0 || validez[5]==0){
         const point=document.querySelector("#contraseñaValida");
         point.style.display="block";
         
-        const point2=document.querySelectorAll(".validez");
+        const point2=document.querySelector("#errores");
+        point2.style.display="none";
         
-        for (let k = 0; k < validez.length; k++) {
-            if(validez[k]==0){
-                point2[k].style.display="none";
-                
-            }
-            
-        }
     }
 
     // ahora estaría lista para enviar al servidor si paso todos los filtros
