@@ -9,7 +9,7 @@ const handleChange=(event)=>{
 
 const handleSubmit=(event)=>{
     const arrayPalabra=input;
-    const arrayPalabraOrdenada=[...arrayPalabra].sort();
+    const arrayPalabraOrdenada=[...arrayPalabra].sort(); //js lo ordena alfabeticamente con sort 
     
     let palabraOrdenada="";
     let conteoPalabra="";
@@ -34,6 +34,7 @@ const handleSubmit=(event)=>{
     
     let respuesta=document.querySelector("#respuesta");
     respuesta.innerHTML=`[${conteoPalabra}][${palabraOrdenada}]`
+    
     //corta con la naturaleza del submit que es recargar la pagina
     event.preventDefault();
 }
@@ -111,19 +112,18 @@ const handleSubmit2=(event)=>{//
 
 /*---------------------------------Ejercicio 3-------------------------------------------- */
 
-let on3;
+let input3;
 const handleChange3=(event)=>{
     const [...contraseña]=event.target.value
-    on3=contraseña;
+    input3=contraseña;
 }
 
 const handleSubmit3=(event)=>{
     // Una vez recibida la contraseña ingresada procederemos a el filtrado que se va ir dando en cascada si no es modificado el elemento [0,0,0,0,0,0] deberá presentar contraseña valida y sino un mensaje de los requisitos para la contraseña 
-    
-    let validez=[0,0,0,0,0,0] //el priemer elemento es validez[0] y este es el filtro de si la contraseña contiene 8 a 15 caracteres.
+    let validez=[0,0,0,0,0,0] 
+    const contraseña=input3;
 
-    //variables que usaré para los filtros, están los simbolos requeridos, la variable que almacerara las mayusculas para comparar si contiene mas de dos mayus. y una funcion esNumero que me servira para evaluar si la cadena de texto contiene un numero esNumero("1") => true
-    const contraseña=on3;
+
     let mayusContraseña=[];
     let simbolos=["*","_","-", "¿", "¡", "?", "#", "$"];
     const esNumero=(a)=>{
@@ -133,30 +133,26 @@ const handleSubmit3=(event)=>{
     /* Inicio del primer filtro corresponde a validez[0], si pasa validez no se modificará */
     if(7<contraseña.length && contraseña.length<16){
        
-        /* Paso entonces validez[0] se mantiene y viene el filtro de los espacios en blanco le  corresponde el a[1] */
+        /* filtro de los espacios en blanco le  corresponde el validez[1] */
+        if(contraseña.includes(" ")){
+            validez[1]=1;
+            console.log("Error la contraseña no puede tener espacios en blanco");
+        }
+       
+        /*Filtro 2 mayusculas minimo */
         
+        let contMayus=0;
         for (let j = 0; j < contraseña.length; j++) {
-            if(contraseña[j]===" "){
-                console.log("Error la contraseña no puede tener espacios en blanco");
-                validez[1]=1;
-                break;
-
-            }
-            mayusContraseña.push(contraseña[j].toUpperCase()); // depaso utilizo el bucle para convertir todas los caracteres en mayusculas
+            if(contraseña[j].toUpperCase()===contraseña[j]){
+                contMayus++;
+            } 
         }
-
-        /* aqui viene el tercer filtro validez[2] que verá si tiene almenos dos mayusculas, caso contrario validez[2]=1 */
-        let cont3=0;
-       for (let i = 0; i < contraseña.length; i++) {
-            if(contraseña[i]===mayusContraseña[i]){
-                cont3++;
-            }   
-        }
-        if(cont3<2){
+        if(contMayus<2){
             validez[2]=1;
-            console.log("Error la contraseña debe tener 2 Mayusculas");  
+            console.log("Error la contraseña debe tener 2 Mayusculas");
         }
-        
+        console.log(contMayus,contraseña);
+
         /* Aqui estaremos en el filtro de simbolos, si no contiene almenos un simbolo especial validez[3]=1 */
 
         let contadorSimbolos=0;
