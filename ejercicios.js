@@ -116,6 +116,7 @@ let input3;
 const handleChange3=(event)=>{
     const [...contraseña]=event.target.value
     input3=contraseña;
+    
 }
 
 const handleSubmit3=(event)=>{
@@ -133,40 +134,40 @@ const handleSubmit3=(event)=>{
     /* Inicio del primer filtro corresponde a validez[0], si pasa validez no se modificará */
     if(7<contraseña.length && contraseña.length<16){
        
+        console.log(contraseña);
         /* filtro de los espacios en blanco le  corresponde el validez[1] */
         if(contraseña.includes(" ")){
             validez[1]=1;
             console.log("Error la contraseña no puede tener espacios en blanco");
-        }
+        } 
        
         /*Filtro 2 mayusculas minimo */
         
         let contMayus=0;
         for (let j = 0; j < contraseña.length; j++) {
-            if(contraseña[j].toUpperCase()===contraseña[j]){
-                contMayus++;
+            if(!esNumero(contraseña[j])){
+                if(contraseña[j].toUpperCase()===contraseña[j]){
+                    contMayus++;
+                } 
             } 
         }
         if(contMayus<2){
             validez[2]=1;
-            console.log("Error la contraseña debe tener 2 Mayusculas");
+            console.log("Error la contraseña debe tener minimo 2 Mayusculas");
         }
-        console.log(contMayus,contraseña);
 
         /* Aqui estaremos en el filtro de simbolos, si no contiene almenos un simbolo especial validez[3]=1 */
-
-        let contadorSimbolos=0;
-        for (let z = 0; z < contraseña.length; z++) {
-            for (let x = 0; x < contraseña.length; x++) {
-                if(contraseña[z]===simbolos[x]){
-                    contadorSimbolos++;
-                }
-            }             
+        let contSimbolos=0;
+        for (let i = 0; i < simbolos.length; i++) {
+            if(contraseña.includes(simbolos[i])){
+                contSimbolos++;
+            }
         }
-        if(contadorSimbolos<1){
-            console.log("Debe contener al menos 1 carácter de esta lista (* _ - ¿ ¡ ? # $)");
+        if(contSimbolos===0){
             validez[3]=1;
+            console.log("La contraseña tener almenos alguno de los siguientes caracteres especiales (* _ - ¿ ¡ ? # $)");
         }
+
 
         /*filtro de repeticion de numero consecutivo validez[4] y almenos 3 numeros validez[5] */
         let repNum=0,num=0;
@@ -202,43 +203,39 @@ const handleSubmit3=(event)=>{
 
     /*la contraseña o es superior a 15 o es inferior a 8 */
     else{
+        console.log(contraseña);
         validez[0]=1;
+        /* filtro de los espacios en blanco le  corresponde el validez[1] */
+        if(contraseña.includes(" ")){
+            validez[1]=1;
+            console.log("Error la contraseña no puede tener espacios en blanco");
+        } 
+       
+        /*Filtro 2 mayusculas minimo */
         
-        /* validez espacio valiz[1] */
+        let contMayus=0;
         for (let j = 0; j < contraseña.length; j++) {
-            if(contraseña[j]===" "){
-                console.log("Error la contraseña no puede tener espacios en blanco");
-                validez[1]=1;
-                break;
-            }
-            mayusContraseña.push(contraseña[j].toUpperCase());
-            
+            if(!esNumero(contraseña[j])){
+                if(contraseña[j].toUpperCase()===contraseña[j]){
+                    contMayus++;
+                } 
+            } 
         }
-        /*validez mayuscula validez[2] */
-        let cont3=0;
-        for (let i = 0; i < contraseña.length; i++) {
-            if(contraseña[i]===mayusContraseña[i]){
-                cont3++;
-            }   
-        }
-        if(cont3<2){
-            console.log("Error la contraseña debe tener 2 Mayusculas");
+        if(contMayus<2){
             validez[2]=1;
-            
+            console.log("Error la contraseña debe tener minimo 2 Mayusculas");
         }
-        
-        /*filtro de simbolos validez[3] */
-        let contadorSimbolos=0;
-        for (let z = 0; z < contraseña.length; z++) {
-            for (let x = 0; x < contraseña.length; x++) {
-                if(contraseña[z]===simbolos[x]){
-                    contadorSimbolos++;
-                }
-            }             
+
+        /* Aqui estaremos en el filtro de simbolos, si no contiene almenos un simbolo especial validez[3]=1 */
+        let contSimbolos=0;
+        for (let i = 0; i < simbolos.length; i++) {
+            if(contraseña.includes(simbolos[i])){
+                contSimbolos++;
+            }
         }
-         if(contadorSimbolos<1){
-            console.log("Debe contener al menos 1 carácter de esta lista (* _ - ¿ ¡ ? # $)");
+        if(contSimbolos===0){
             validez[3]=1;
+            console.log("La contraseña tener almenos alguno de los siguientes caracteres especiales (* _ - ¿ ¡ ? # $)");
         }
 
         /*filtro de numeros, numeros consecutivos validez[4] - menos de tres numeros validez[5]  */
@@ -277,22 +274,22 @@ const handleSubmit3=(event)=>{
     /* el validador va imprimir los errores a corregir en rojo y cuando sea correcta aparecera en verde */
     
     if(validez[0]==1 || validez[1]==1 || validez[2]==1 || validez[3]==1 || validez[4]==1 || validez[5]==1){
-        const point=document.querySelector("#errores");
-        point.style.display="block";
-        const point2=document.querySelectorAll(".validez");
-        
-        for (let k = 0; k < validez.length; k++) {
-            if(validez[k]==1){
-               
-                point2[k].style.color="red";
-            }
-            
-        }
         const point3=document.querySelector("#contraseñaValida");
-        point3.style.display="none";
+        point3.style.display="none";//siempre que entre apague contenedor decontraseña valida
+        const point=document.querySelector("#errores");
+        point.style.display="block";// active contedor errores
+        const point2=document.querySelectorAll(".validez");//provemos validez
+        
+        for (let k = 0; k < validez.length; k++){
+            point2[k].style.color="";//setea al valor incial y despues se fija si lo marca rojo
+            if(validez[k]===1){
+                point2[k].style.color="red";
+            } 
+        }
+        
     }
 
-    else if(validez[0]==0 || validez[1]==0 || validez[2]==0 || validez[3]==0 || validez[4]==0 || validez[5]==0){
+    else if(validez[0]==0 && validez[1]==0 && validez[2]==0 && validez[3]==0 && validez[4]==0 && validez[5]==0){
         const point=document.querySelector("#contraseñaValida");
         point.style.display="block";
         
