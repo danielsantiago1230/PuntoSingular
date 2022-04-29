@@ -4,14 +4,15 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <link rel="stylesheet" href="./estilo.css">
+    <title>Punto Singular</title>
 </head>
 <body>
     <header>
         <h1>Resolución de Ejercicios Punto Singular</h1>
     </header>
-    <main>
-        <article>
+    <main class="cardMain">
+        <article class="card">
             <h2>Ejercicio Número 1</h2>
             <form onsubmit=handleSubmit(event)>
                 <label for="palabra">Ingrese una palabra</label>
@@ -20,7 +21,7 @@
             </form>
             <p id="respuesta"></p>
         </article>
-        <article>
+        <article class="card">
             <h2>Ejercicio Número 2</h2>
             <form onsubmit=handleSubmit2(event)>
                 <label for="palabra2">Ingrese una palabra</label>
@@ -28,13 +29,25 @@
                 <button type="submit" >Enviar</button>
             </form>
         </article>
-        <article>
+        <article class="card">
             <h2>Ejercicio Número 3</h2>
             <form onsubmit=handleSubmit3(event)>
                 <label for="contraseña">Ingrese una contraseña</label>
                 <input type="password" name="contraseña" id="contraseña" onchange=handleChange3(event)>
                 <button type="submit" >Enviar</button>
             </form>
+            <div id="errores">
+                <p class="validez">La contraseña debe estar entre 8 a 15 caracteres</p>
+                <p class="validez">La contraseña no debe contener espacios</p>
+                <p class="validez">debe tener almenos dos Mayusculas</p>
+                <p class="validez">La contraseña tener almenos alguno de los siguientes caracteres especiales (* _ - ¿ ¡ ? # $)</p>
+                <p class="validez">la contraseña no debe tener numeros consecutivos</p>
+                <p class="validez">la contraseña debe tener almenos 3 numeros</p>
+                
+            </div>
+            <div id="contraseñaValida">
+                <p class="contraseña">contraseña valida</p>
+            </div>
         </article>
     </main>
     <footer>

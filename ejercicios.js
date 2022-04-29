@@ -115,6 +115,7 @@ const handleSubmit2=(event)=>{//
 }
 
 /*---------------------------------Ejercicio 3-------------------------------------------- */
+
 let on3;
 const handleChange3=(event)=>{
     const [...contraseña]=event.target.value
@@ -122,33 +123,46 @@ const handleChange3=(event)=>{
 }
 
 const handleSubmit3=(event)=>{
+    // Una vez recibida la contraseña ingresada procederemos a el filtrado que se va ir dando en cascada si no es modificado el elemento [0,0,0,0,0,0] deberá presentar contraseña valida y sino un mensaje de los requisitos para la contraseña 
+    
+    let validez=[0,0,0,0,0,0] //el priemer elemento es validez[0] y este es el filtro de si la contraseña contiene 8 a 15 caracteres.
+
+    //variables que usaré para los filtros, están los simbolos requeridos, la variable que almacerara las mayusculas para comparar si contiene mas de dos mayus. y una funcion esNumero que me servira para evaluar si la cadena de texto contiene un numero esNumero("1") => true
     const contraseña=on3;
     let mayusContraseña=[];
     let simbolos=["*","_","-", "¿", "¡", "?", "#", "$"];
     const esNumero=(a)=>{
         return !isNaN(a)
     }
-    console.log(contraseña);
+
+    /* Inicio del primer filtro corresponde a validez[0], si pasa validez no se modificará */
     if(7<contraseña.length && contraseña.length<16){
+       
+        /* Paso entonces validez[0] se mantiene y viene el filtro de los espacios en blanco le  corresponde el a[1] */
         
         for (let j = 0; j < contraseña.length; j++) {
             if(contraseña[j]===" "){
                 console.log("Error la contraseña no puede tener espacios en blanco");
+                validez[1]=1;
                 break;
+
             }
-            mayusContraseña.push(contraseña[j].toUpperCase());
+            mayusContraseña.push(contraseña[j].toUpperCase()); // depaso utilizo el bucle para convertir todas los caracteres en mayusculas
         }
-        
+
+        /* aqui viene el tercer filtro validez[2] que verá si tiene almenos dos mayusculas, caso contrario validez[2]=1 */
         let cont3=0;
        for (let i = 0; i < contraseña.length; i++) {
             if(contraseña[i]===mayusContraseña[i]){
                 cont3++;
             }   
         }
-        
         if(cont3<2){
+            validez[2]=1;
             console.log("Error la contraseña debe tener 2 Mayusculas");  
         }
+        
+        /* Aqui estaremos en el filtro de simbolos, si no contiene almenos un simbolo especial validez[3]=1 */
 
         let contadorSimbolos=0;
         for (let z = 0; z < contraseña.length; z++) {
@@ -160,8 +174,10 @@ const handleSubmit3=(event)=>{
         }
         if(contadorSimbolos<1){
             console.log("Debe contener al menos 1 carácter de esta lista (* _ - ¿ ¡ ? # $)");
+            validez[3]=1;
         }
 
+        /*filtro de repeticion de numero consecutivo validez[4] y almenos 3 numeros validez[5] */
         let repNum=0,num=0;
         for (let x = 0; x < contraseña.length; x++) {
             if(esNumero(contraseña[x])){
@@ -175,29 +191,39 @@ const handleSubmit3=(event)=>{
         if(num!=0){
             if(repNum!=0){
                 console.log("Error la contraseña no debe tener números repetidos");
+                validez[4]=1;
                 if(num<3){
                     console.log("Error la contraseña debe terner almenos 3 numeros");
+                    validez[5]=1;
                 }
             }
             else if(num<3){
                 console.log("Error la contraseña debe terner almenos 3 numeros");
+                validez[5]=1;
             }
         }
-        else if(num<3){
+        else if(num==0){
             console.log("Error la contraseña debe terner almenos 3 numeros");
+            validez[5]=1;
         }
     }
+
+
+    /*la contraseña o es superior a 15 o es inferior a 8 */
     else{
+        validez[0]=1;
         
+        /* validez espacio valiz[1] */
         for (let j = 0; j < contraseña.length; j++) {
             if(contraseña[j]===" "){
                 console.log("Error la contraseña no puede tener espacios en blanco");
+                validez[1]=1;
                 break;
             }
             mayusContraseña.push(contraseña[j].toUpperCase());
             
         }
-        
+        /*validez mayuscula validez[2] */
         let cont3=0;
         for (let i = 0; i < contraseña.length; i++) {
             if(contraseña[i]===mayusContraseña[i]){
@@ -206,9 +232,11 @@ const handleSubmit3=(event)=>{
         }
         if(cont3<2){
             console.log("Error la contraseña debe tener 2 Mayusculas");
+            validez[2]=1;
             
         }
-    
+        
+        /*filtro de simbolos validez[3] */
         let contadorSimbolos=0;
         for (let z = 0; z < contraseña.length; z++) {
             for (let x = 0; x < contraseña.length; x++) {
@@ -217,10 +245,12 @@ const handleSubmit3=(event)=>{
                 }
             }             
         }
-
-        if(contadorSimbolos<1){
+         if(contadorSimbolos<1){
             console.log("Debe contener al menos 1 carácter de esta lista (* _ - ¿ ¡ ? # $)");
+            validez[3]=1;
         }
+
+        /*filtro de numeros, numeros consecutivos validez[4] - menos de tres numeros validez[5]  */
 
         let repNum=0,num=0;
         for (let x = 0; x < contraseña.length; x++) {
@@ -234,22 +264,56 @@ const handleSubmit3=(event)=>{
         }
         if(num!=0){
             if(repNum!=0){
+                validez[4]=1;
                 console.log("Error la contraseña no debe tener números repetidos");
                 if(num<3){
+                    validez[5]=1;
                     console.log("Error la contraseña debe terner almenos 3 numeros");
                 }
             }
             else if(num<3){
+                validez[5]=1;
                 console.log("Error la contraseña debe terner almenos 3 numeros");
             }
         }
-        else if(num<3){
+        else if(num==0){
+            validez[5]=1;
             console.log("Error la contraseña debe terner almenos 3 numeros");
         }
-        console.log("Error la contraseña debe tener entre 8 y 15 caracteres");
-
-        
+        console.log("Error la contraseña debe tener entre 8 y 15 caracteres");  
     }
+    
+    /* el validador va imprimir los errores a corregir en rojo y cuando sea correcta aparecera en verde */
+    
+    if(validez[0]==1 || validez[1]==1 || validez[2]==1 || validez[3]==1 || validez[4]==1 || validez[5]==1){
+        const point=document.querySelector("#errores");
+        point.style.display="block";
+        const point2=document.querySelectorAll(".validez");
+        
+        for (let k = 0; k < validez.length; k++) {
+            if(validez[k]==1){
+                point2[k].style.color="red";
+            }
+            
+        }
+    }
+
+    else if(validez[0]==0 || validez[1]==0 || validez[2]==0 || validez[3]==0 || validez[4]==0 || validez[5]==0){
+        const point=document.querySelector("#contraseñaValida");
+        point.style.display="block";
+        
+        const point2=document.querySelectorAll(".validez");
+        
+        for (let k = 0; k < validez.length; k++) {
+            if(validez[k]==0){
+                point2[k].style.display="none";
+                
+            }
+            
+        }
+    }
+
+    // ahora estaría lista para enviar al servidor si paso todos los filtros
 
     event.preventDefault();
 }
