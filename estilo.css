@@ -27,7 +27,9 @@ h1{
     align-items: center;
     background-color: #45C4B0;
 }
-
+section{
+    margin: 0% 0% 10% 0%;
+}
 #errores{
     display: none;
 }

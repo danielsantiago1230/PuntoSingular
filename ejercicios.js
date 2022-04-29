@@ -40,76 +40,68 @@ const handleSubmit=(event)=>{
 }
 
 /* -------------------ejercicio 2--------------------------------------------------------- */
-let on2;
+/* Ejercicio 2.1 */
+let input2;
 const handleChange2=(event)=>{
-    const [...arrayPalabra]=event.target.value
-    on2=arrayPalabra;
+    let [...inputPalabra]=event.target.value
+    input2=inputPalabra
 }
 const handleSubmit2=(event)=>{//
-    arrayPalabra=on2;
-    let aux=[];
-    const transformacion=()=>{
-        for (let j = 0; j < arrayPalabra.length; j++) {
-            switch (arrayPalabra[j]) {
-                case "a":
-                    aux.push("0");
-                    break;
-                case "e":
-                    aux.push("0");
-                    break;
-                case "i":
-                    aux.push("0");
-                    break;
-                case "o":
-                    aux.push("0");
-                    break;
-                case "u":
-                    aux.push("0");
-                     break;
-                default:
-                    aux.push("1");
-                    break;
-            }
-        }
+    respuesta=document.querySelector("#respuesta21");
+    const arrayPalabra=input2
+    let palabra="";
+    for (let i = 0; i < arrayPalabra.length; i++) {      
+        palabra+=arrayPalabra[i];
     }
-    transformacion();
-    console.log(arrayPalabra);
-    console.log(aux);
+    /* regex vocal:/[aeiou]/  consonante:/[^aeiou]/  
+    consonante seguida de consonante:[^aeiou](?=[^aeiou])
+    */
+    const silabas=/[^aeiou]*[aeiou]/gi //primer ejercicio
+    const silabas2=/[aeiou][^aeiou]|[^aeiou][aeiou][^aeiou]|[^aeiou][aeiou]$/gi //segundo paso 
+    //excepciones:
+    const silabas3=/[^aeiou]*[aeiou]|[^aeiou][^aeiou][aeiou]/gi //ch, ll ,rr
     
-    let aux2=[];
-    let aux3;
-    let r="",r2="";
-
-    for (let i = 0; i < arrayPalabra.length; i++) {
-        //condicion para el 2.1
-        if(aux[i]==="0" && aux[i+1]==="1" && aux[i+2]==="0"){
-            r=arrayPalabra[i+1];
-            r2=r2.concat(r,arrayPalabra[i+2])
-            aux2.push(r2);
-            r="";
-            r2="";
-            console.log(aux2);
-            if(aux[0]==="0"){
-                aux3=[arrayPalabra[0]];
-            }
-            else if(aux[0]==="1"){
-                r=arrayPalabra[0];
-                r2=r2.concat(r,arrayPalabra[1])
-                aux3=[r2];
-                r="";
-                r2="";
-            }
+    let matchPalabraSilabas=palabra.match(silabas);
+    let palabraConcant=""
+    for (let i = 0; i < matchPalabraSilabas.length; i++) {
+        if(i===(matchPalabraSilabas.length-1)){
+            palabraConcant+=matchPalabraSilabas[i];
         }
-
-
+        else{
+            palabraConcant+=matchPalabraSilabas[i]+"-";;
+        }
+            
     }
-    aux2.splice(0,0,aux3[0])
-    console.log(aux2);
+    respuesta.innerHTML=`${palabraConcant}`
 
     //corta con la naturaleza del submit que es recargar la pagina
     event.preventDefault();
 }
 
+/* ---------------Ejercicio 2.2 --------------------*/
+let input22;
+const handleChange22=(event)=>{
+    let [...inputPalabra]=event.target.value
+    input2=inputPalabra
+}
+const handleSubmit22=(event)=>{//
+    respuesta=document.querySelector("#respuesta");
+    const arrayPalabra=input2
+    let palabra="";
+    for (let i = 0; i < arrayPalabra.length; i++) {      
+        palabra+=arrayPalabra[i];
+    }
+    
+    const silabas=/[aeiou][^aeiou]|[^aeiou][aeiou][^aeiou]|[^aeiou][aeiou]$/gi //segundo paso
+    const silabas2=/[^aeiou]*[aeiou]|[^aeiou][^aeiou][aeiou]/gi //ch, ll ,rr
+    
+    console.log(palabra.match(silabas));
+
+
+
+    //corta con la naturaleza del submit que es recargar la pagina
+    event.preventDefault();
+}
 /*---------------------------------Ejercicio 3-------------------------------------------- */
 
 let input3;
