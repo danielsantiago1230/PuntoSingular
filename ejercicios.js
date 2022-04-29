@@ -1,44 +1,39 @@
 //Me parecio emocionante resolver los problemas con un entorno visual, por ende cree el siguiente codigo
 
 /*------------------ejercicio1---------------------------------------------------------- */
-let on;
+let input;
 const handleChange=(event)=>{
     const [...arrayPalabra]=event.target.value
-    on=arrayPalabra;
+    input=arrayPalabra;
 }
 
 const handleSubmit=(event)=>{
-    const arrayPalabra=on;
-    const aux=[...arrayPalabra].sort();
-    const aux2=[...arrayPalabra].sort();
-    let palabra=[];
-    let respuesta=document.querySelector("#respuesta");
-    let cont2=0;
-    let r="";
-    let r2="";
-
+    const arrayPalabra=input;
+    const arrayPalabraOrdenada=[...arrayPalabra].sort();
+    
+    let palabraOrdenada="";
+    let conteoPalabra="";
     for (let i = 0; i < arrayPalabra.length; i++) {
         let cont=0;
-        for (let j = 0; j < arrayPalabra.length; j++) {
-            if (aux[i]==aux2[j]) {
-                cont++;
+        if(!conteoPalabra.includes(arrayPalabra[i])){
+            for (let j = 0; j < arrayPalabra.length; j++) {
+                if(arrayPalabra[i]==arrayPalabra[j]){
+                    cont++;
+                }
+            }
+            if(conteoPalabra===""){
+                conteoPalabra+=arrayPalabra[i]+"->"+cont;
+            }
+            else{
+                conteoPalabra+=","+arrayPalabra[i]+"->"+cont;
             }
         }
-        if(i==0){
-            palabra.push(aux[i]+"->"+cont);
-            cont2=cont;
-        }
-        else if(i==cont2)
-        {
-            palabra.push(aux[i]+"->"+cont);
-            cont2=cont2+cont;
-        }
-        
-        r=aux[i];
-        r2=r2.concat("",r);
+        palabraOrdenada+=arrayPalabraOrdenada[i];
     }
-
-    respuesta.innerHTML=`[${palabra}][${r2}]`
+    console.log(conteoPalabra,palabraOrdenada); 
+    
+    let respuesta=document.querySelector("#respuesta");
+    respuesta.innerHTML=`[${conteoPalabra}][${palabraOrdenada}]`
     //corta con la naturaleza del submit que es recargar la pagina
     event.preventDefault();
 }
