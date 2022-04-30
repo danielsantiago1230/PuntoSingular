@@ -40,7 +40,7 @@ const handleSubmit=(event)=>{
 }
 
 /* -------------------ejercicio 2--------------------------------------------------------- */
-/* Ejercicio 2.1 */
+/* ------------Ejercicio 2.1---------------- */
 let input2;
 const handleChange2=(event)=>{
     let [...inputPalabra]=event.target.value
@@ -85,8 +85,9 @@ const handleChange22=(event)=>{
     input2=inputPalabra
 }
 const handleSubmit22=(event)=>{//
-    respuesta=document.querySelector("#respuesta");
+    respuesta=document.querySelector("#respuesta22");
     const arrayPalabra=input2
+    
     let palabra="";
     for (let i = 0; i < arrayPalabra.length; i++) {      
         palabra+=arrayPalabra[i];
@@ -94,11 +95,28 @@ const handleSubmit22=(event)=>{//
     
     const silabas=/[aeiou][^aeiou]|[^aeiou][aeiou][^aeiou]|[^aeiou][aeiou]$/gi //segundo paso
     const silabas2=/[^aeiou]*[aeiou]|[^aeiou][^aeiou][aeiou]/gi //ch, ll ,rr
+    const silabas3=/[^aeiou][^aeiou][aeiou][^aeiou]/gi // Sería la otra condición pero no me estaría saliendo
+    console.log(palabra.match(silabas3));
+
+    let matchPalabraSilabas;
+    if(palabra.includes("ll")|| palabra.includes("ch") || palabra.includes("rr")){
+        matchPalabraSilabas=palabra.match(silabas2);
+    }
+    else{
+        matchPalabraSilabas=palabra.match(silabas)
+    }
     
-    console.log(palabra.match(silabas));
-
-
-
+    let palabraConcant="";
+    for (let i = 0; i < matchPalabraSilabas.length; i++) {
+        if(i===(matchPalabraSilabas.length-1)){
+            palabraConcant+=matchPalabraSilabas[i];
+        }
+        else{
+            palabraConcant+=matchPalabraSilabas[i]+"-";;
+        }
+            
+    }
+    respuesta.innerHTML=`${palabraConcant}`
     //corta con la naturaleza del submit que es recargar la pagina
     event.preventDefault();
 }
